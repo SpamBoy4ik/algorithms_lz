@@ -1,0 +1,8 @@
+Sorted list: [654, 606, 505, 359, 286, 261, 213, 111, 60, 13]
+ Target: 505
+Binary search:
+The index of the item in the list: 2
+ It took 5 comparisons.
+Linear search:
+The index of the item in the list: 2
+ It took 3 comparisons.

@@ -2,26 +2,30 @@ from random import randint as ri
 
 choise = input("Прочитать файл(0) или сгенерировать список(1): ")
 if choise == "0":
-    file_name = input("Введите название файла: ")
-    input_file = open(f"{file_name}.txt")
+    input_file = open("sort_input.txt")
     input_data = input_file.read()
     input_list = input_data.split(", ")
     for index in range(len(input_list)):
         input_list[index] = int(input_list[index])
     input_file.close()
 
-    output_file = open("out.txt", 'w')
+    output_file = open("sort_output.txt", 'w')
     output_file.write(f"Unsorted list: {input_list}\n")
-    output_file.write("Sorting by selection:\n") # сорт. выборкой
-    sample_count = 0
+
+    output_file.write("Sorting by selection:\n") # сортировка выборкой
+    sample_counter = 0
     sample_numbers = []
-    temp_numbers = input_list.copy() # вспом. список для сортировки
-    for i in range(len(temp_numbers)):
-        sample_numbers.append(max(temp_numbers))
-        temp_numbers.remove(max(temp_numbers))
-        output_file.write(str(sample_numbers) + "\n")
-        sample_count += 1
-    output_file.write(f"Sorted List: {sample_numbers}.\n")
+    temp_numbers = input_list.copy() # вспомогательный список для сортировки
+    while len(temp_numbers) > 0:
+        min = temp_numbers[0]
+        for index in range(len(temp_numbers)):
+            sample_counter += 1
+            if min > temp_numbers[index]:
+                min = temp_numbers[index]
+        sample_numbers.append(min)
+        temp_numbers.remove(min)
+        output_file.write(f"{sample_numbers}\n")
+    output_file.write(f"Sorted list: {sample_numbers}.\nNeeded {sample_counter} comparisons.\n")
 
     output_file.write("Bubble sorting:\n") # сорт. пузырьком 
     bubble_count = 0
@@ -43,24 +47,28 @@ if choise == "0":
 
 else:
     NUMBERS = []
-    for _ in range(10):
+    for _ in range(20):
         NUMBERS.append(ri(0, 1000))
     print(f"Исходный список: {NUMBERS}")
 
     print("Сортировка выборкой:")
-    sample_count = 0
+    sample_counter = 0
     sample_numbers = []
     temp_numbers = NUMBERS.copy() # вспом. список для сортировки
-    for i in range(len(temp_numbers)):
-        sample_numbers.append(max(temp_numbers))
-        temp_numbers.remove(max(temp_numbers))
-        print(sample_numbers)
-        sample_count += 1
-    print(f"Отсортированный список: {sample_numbers}.")
+    while len(temp_numbers) > 0:
+        min = temp_numbers[0]
+        for index in range(len(temp_numbers)):
+            sample_counter += 1
+            if min > temp_numbers[index]:
+                min = temp_numbers[index]
+        sample_numbers.append(min)
+        temp_numbers.remove(min)
+        print(f"{sample_numbers}")
+    print(f"Отсортированный список: {sample_numbers}.\n Понадобилось {sample_counter} сравнений.\n")
 
     print("Сортировка пузырьком:")
-    bubble_count = 0
     bubble_numbers = NUMBERS.copy()
+    bubble_count = 0
     flag = True
     while flag:
         flag = False
